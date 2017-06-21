@@ -27,5 +27,9 @@
         public const string UnableToGoHigherInPartionHierarchy = "Unable to go higher in the partition hierarchy";
 
         public const string UnableToParseNumber = "Second parameter must be an integer.";
+
+        public const string InvalidStudentFilter = "The given filter is not one of the following: excellent/average/poor";
+
+        public const string InvalidComparisonQuery = "The comparison query you want, does not exist in the context of the current program!";
     }
 }

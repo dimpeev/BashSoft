@@ -39,7 +39,9 @@ namespace BashSoft
                 case "help":
                     TryGetHelp(input, data);
                     break;
-                case "filter": break;
+                case "filter":
+                    TryFilterAndTake(input, data);
+                    break;
                 case "order": break;
                 case "decOrder": break;
                 case "download": break;
@@ -48,6 +50,23 @@ namespace BashSoft
                     DisplayInvalidCommandMessage(input);
                     break;
 
+            }
+        }
+
+        private static void TryFilterAndTake(string input, string[] data)
+        {
+            if (data.Length == 5)
+            {
+                string courseName = data[1];
+                string filter = data[2].ToLower();
+                string takeCommand = data[3].ToLower();
+                string takeQuantity = data[4].ToLower();
+
+                StudentsRepository.GetAllStudentsFromCourse(courseName);
+            }
+            else
+            {
+                DisplayInvalidCommandMessage(input);
             }
         }
 
