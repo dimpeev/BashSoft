@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text.RegularExpressions;
 
     public static class StudentsRepository
     {
@@ -28,24 +29,30 @@
             string path = SessionData.currentPath + "\\" + fileName;
             if (File.Exists(path))
             {
+                string pattern = @"([A-Z][A-Za-z+#]*_[A-Z][a-z]{2}_\d{4})\s+([A-Z][a-z]{0,3}\d{2}_\d{2,4})\s+(\d+)";
+                Regex regex = new Regex(pattern);
                 string[] allInputLines = File.ReadAllLines(path);
                 for (int line = 0; line < allInputLines.Length; line++)
                 {
-                    if (!string.IsNullOrEmpty(allInputLines[line]))
+                    if (!string.IsNullOrEmpty(allInputLines[line]) && regex.IsMatch(allInputLines[line]))
                     {
-                        string[] data = allInputLines[line].Split(' ');
-                        string course = data[0];
-                        string student = data[1];
-                        int mark = int.Parse(data[2]);
-                        if (!_studentsByCourse.ContainsKey(course))
+                        Match currentMatch = regex.Match(allInputLines[line]);
+                        string course = currentMatch.Groups[1].Value;
+                        string student = currentMatch.Groups[2].Value;
+                        int studentScoreOnTask;
+                        bool hasParsedScore = int.TryParse(currentMatch.Groups[3].Value, out studentScoreOnTask);
+                        if (hasParsedScore && studentScoreOnTask >= 0 && studentScoreOnTask <= 100)
                         {
-                            _studentsByCourse.Add(course, new Dictionary<string, List<int>>());
+                            if (!_studentsByCourse.ContainsKey(course))
+                            {
+                                _studentsByCourse.Add(course, new Dictionary<string, List<int>>());
+                            }
+                            if (!_studentsByCourse[course].ContainsKey(student))
+                            {
+                                _studentsByCourse[course].Add(student, new List<int>());
+                            }
+                            _studentsByCourse[course][student].Add(studentScoreOnTask);
                         }
-                        if (!_studentsByCourse[course].ContainsKey(student))
-                        {
-                            _studentsByCourse[course].Add(student, new List<int>());
-                        }
-                        _studentsByCourse[course][student].Add(mark);
                     }
                 }
                 IsDataInitialized = true;

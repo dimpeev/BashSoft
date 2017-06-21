@@ -15,6 +15,9 @@ namespace BashSoft
                 case "open":
                     TryOpenData(input, data);
                     break;
+                case "show":
+                    TryShowWantedData(input, data);
+                    break;
                 case "mkdir":
                     TryCreateDirectory(input, data);
                     break;
@@ -45,6 +48,25 @@ namespace BashSoft
                     DisplayInvalidCommandMessage(input);
                     break;
 
+            }
+        }
+
+        private static void TryShowWantedData(string input, string[] data)
+        {
+            if (data.Length == 2)
+            {;
+                string courseName = data[1];
+                StudentsRepository.GetAllStudentsFromCourse(courseName);
+            }
+            else if (data.Length == 3)
+            {
+                string courseName = data[1];
+                string userName = data[2];
+                StudentsRepository.GetStudentScoresFromCourse(courseName, userName);
+            }
+            else
+            {
+                DisplayInvalidCommandMessage(input);
             }
         }
 
