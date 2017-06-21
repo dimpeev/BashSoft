@@ -1,8 +1,7 @@
-﻿namespace SimpleJudge
+﻿namespace BashSoft
 {
     using System;
     using System.IO;
-    using BashSoft;
 
     public static class Tester
     {

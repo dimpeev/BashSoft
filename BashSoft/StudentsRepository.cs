@@ -2,19 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
 
     public static class StudentsRepository
     {
         public static bool IsDataInitialized = false;
         private static Dictionary<string, Dictionary<string, List<int>>> _studentsByCourse;
 
-        public static void InitializeData()
+        public static void InitializeData(string fileName)
         {
             if (!IsDataInitialized)
             {
                 OutputWriter.WriteMessageOnNewLine("Reading data...");
                 _studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
-                ReadData();
+                ReadData(fileName);
             }
             else
             {
@@ -22,28 +23,38 @@
             }
         }
 
-        private static void ReadData()
+        private static void ReadData(string fileName)
         {
-            string input = Console.ReadLine();
-            while (!string.IsNullOrEmpty(input))
+            string path = SessionData.currentPath + "\\" + fileName;
+            if (File.Exists(path))
             {
-                string[] tokens = input.Split(' ');
-                string course = tokens[0];
-                string student = tokens[1];
-                int mark = int.Parse(tokens[2]);
-                if (!_studentsByCourse.ContainsKey(course))
+                string[] allInputLines = File.ReadAllLines(path);
+                for (int line = 0; line < allInputLines.Length; line++)
                 {
-                    _studentsByCourse.Add(course, new Dictionary<string, List<int>>());
+                    if (!string.IsNullOrEmpty(allInputLines[line]))
+                    {
+                        string[] data = allInputLines[line].Split(' ');
+                        string course = data[0];
+                        string student = data[1];
+                        int mark = int.Parse(data[2]);
+                        if (!_studentsByCourse.ContainsKey(course))
+                        {
+                            _studentsByCourse.Add(course, new Dictionary<string, List<int>>());
+                        }
+                        if (!_studentsByCourse[course].ContainsKey(student))
+                        {
+                            _studentsByCourse[course].Add(student, new List<int>());
+                        }
+                        _studentsByCourse[course][student].Add(mark);
+                    }
                 }
-                if (!_studentsByCourse[course].ContainsKey(student))
-                {
-                    _studentsByCourse[course].Add(student, new List<int>());
-                }
-                _studentsByCourse[course][student].Add(mark);
-                input = Console.ReadLine();
+                IsDataInitialized = true;
+                OutputWriter.WriteMessageOnNewLine("Data read!");
             }
-            IsDataInitialized = true;
-            OutputWriter.WriteMessageOnNewLine("Data read!");
+            else
+            {
+                OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
+            }
         }
 
         private static bool IsQueryForCoursePossible(string courseName)

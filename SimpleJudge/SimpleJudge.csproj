@@ -44,14 +44,13 @@
   <ItemGroup>
     <Compile Include="StartUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tester.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BashSoft\BashSoft.csproj">
-      <Project>{ae46ba32-86d8-4503-a31e-208d451c785a}</Project>
+      <Project>{AE46BA32-86D8-4503-A31E-208D451C785A}</Project>
       <Name>BashSoft</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,5 +1,7 @@
 ﻿namespace SimpleJudge
 {
+    using BashSoft;
+
     class StartUp
     {
         static void Main(string[] args)

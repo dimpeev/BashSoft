@@ -25,5 +25,7 @@
             "The given name contains symbols that are not allowed to be used in names of files and folders.";
 
         public const string UnableToGoHigherInPartionHierarchy = "Unable to go higher in the partition hierarchy";
+
+        public const string UnableToParseNumber = "Second parameter must be an integer.";
     }
 }
