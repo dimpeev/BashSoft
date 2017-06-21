@@ -89,7 +89,7 @@ namespace BashSoft
             if (data.Length == 2)
             {
                 string absolutePath = data[1];
-                IOManager.ChangeCurrentDirectoryRelative(absolutePath);
+                IOManager.ChangeCurrentDirectoryAbsolute(absolutePath);
             }
             else
             {
