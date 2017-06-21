@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            IOManager.TraverseDirectory(0);
+            //IOManager.TraverseDirectory(0);
             //IOManager.ChangeCurrentDirectoryRelative("mitko");
             //IOManager.TraverseDirectory(1);
             //StudentsRepository.InitializeData();
@@ -12,6 +12,11 @@
             //StudentsRepository.GetStudentScoresFromCourse("Unity", "Ivan");
 
             //IOManager.CreateDirectoryInCurrentFolder("mitko");
+
+            //IOManager.ChangeCurrentDirectoryAbsolute(@"C:\Windows");
+            //IOManager.TraverseDirectory(20);
+
+            IOManager.CreateDirectoryInCurrentFolder("*2");
         }
     }
 }
